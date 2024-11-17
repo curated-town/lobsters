@@ -12,7 +12,7 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS") { 4 }
 threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-# port        ENV.fetch("PORT") { 3000 }
+port        ENV.fetch("PORT") { 3000 }
 # bind 'tcp://127.0.0.1:3000'
 
 # Specifies the `environment` that Puma will run in.
@@ -81,7 +81,7 @@ end
 # before forking the application. This takes advantage of Copy On Write
 # process behavior so workers use less memory.
 if ENV.fetch("RAILS_ENV") == "production"
-  bind "unix:///srv/lobste.rs/run/puma.sock"
+  # bind "unix:///srv/lobste.rs/run/puma.sock"
 
   # phased restarts
   # https://github.com/puma/puma/blob/master/docs/restart.md

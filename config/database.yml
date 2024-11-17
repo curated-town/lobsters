@@ -1,0 +1,25 @@
+default: &default
+  adapter: trilogy
+  encoding: utf8
+  reconnect: true
+  pool: 5
+  username: <%= ENV['MARIADB_USER'] %>
+  password: <%= ENV['MARIADB_PASSWORD'] %>
+  host: <%= ENV['MARIADB_HOST'] %>
+  port: <%= ENV['MARIADB_PORT'] %>
+  connect_timeout: 10
+  read_timeout: 60
+  write_timeout: 60
+
+development:
+  <<: *default
+  database: <%= ENV['LOBSTER_DATABASE'] %>_development
+
+test:
+  <<: *default
+  database: <%= ENV['LOBSTER_DATABASE'] %>_test
+
+production:
+  <<: *default
+  database: <%= ENV['LOBSTER_DATABASE'] %>_production
+
