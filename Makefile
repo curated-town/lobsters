@@ -1,5 +1,13 @@
 #!/usr/bin/make -f
 
+
+# import .env
+ifneq (,$(wildcard ./.env))
+	include .env
+	export
+endif
+
+
 SHELL                   := /usr/bin/env bash
 REPO_NAMESPACE          ?= curated
 REPO_USERNAME           ?= jamesbrink
@@ -14,6 +22,10 @@ BUILD_DATE              := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 # Default target is to build container
 .PHONY: default
 default: build
+
+.PHONY: installcert
+installcert:
+	sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./.local/caddy-data/caddy/pki/authorities/local/root.crt
 
 # Build the docker image
 .PHONY: build

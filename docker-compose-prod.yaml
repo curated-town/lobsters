@@ -15,7 +15,13 @@ services:
       - MARIADB_USER=root
       - LOBSTER_DATABASE=lobsters
       - LOBSTER_SITE_NAME="Curated Town"
-      - LOBSTER_HOSTNAME="curated.town"
+      - LOBSTER_HOSTNAME=curated.localhost
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - EXCEPTION_SENDER_ADDRESS=${EXCEPTION_SENDER_ADDRESS}
+      - EXCEPTION_RECIPIENTS=${EXCEPTION_RECIPIENTS}
+      - MAILER_DELIVERY_METHOD=smtp
     restart: unless-stopped
 
   db:
@@ -35,6 +41,18 @@ services:
       retries: 3
       start_period: 30s
     restart: unless-stopped
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./.local/caddy-data:/data
+      - ./.local/caddy-config:/config
+    depends_on:
+      - web
 
 volumes:
   db_data:

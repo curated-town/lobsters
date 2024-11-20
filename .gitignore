@@ -4,7 +4,8 @@
 
 # local bundler config
 /.bundle
-
+.local
+.env
 .DS_Store
 .bash_history
 .ash_history
